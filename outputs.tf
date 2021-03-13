@@ -1,4 +1,4 @@
-output "lambda_function" {
+output "this" {
   value = aws_lambda_function.this
 
   description = "The Lambda function."
