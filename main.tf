@@ -18,8 +18,8 @@ resource "aws_lambda_function" "this" {
     }
   }
 
-  filename         = local.archive_file.output_path
-  source_code_hash = local.archive_file.output_base64sha256
+  filename         = try(var.archive_file.output_path, data.archive_file.this[0].output_path)
+  source_code_hash = try(var.archive_file.output_base64sha256, data.archive_file.this[0].output_base64sha256)
 
   tags = var.tags
 
@@ -32,10 +32,6 @@ data "archive_file" "this" {
   type        = "zip"
   source_dir  = var.source_dir
   output_path = ".terraform/tmp/lambda/${var.function_name}.zip"
-}
-
-locals {
-  archive_file = var.archive_file != null ? var.archive_file : data.archive_file.this[0]
 }
 
 resource "aws_iam_role" "this" {

@@ -1,7 +1,7 @@
 variable "archive_file" {
   type = object({
-    filename         = string
-    source_code_hash = string
+    output_path         = string
+    output_base64sha256 = string
   })
   default = null
 
