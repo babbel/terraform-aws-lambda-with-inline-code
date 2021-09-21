@@ -3,3 +3,7 @@
 ## v1.0.0
 
 - [Initial version](https://github.com/babbel/terraform-aws-lambda-with-inline-code/pull/1)
+
+## v1.1.0
+
+- [Added support for secret environment variables](https://github.com/babbel/terraform-aws-lambda-with-inline-code/pull/6)
