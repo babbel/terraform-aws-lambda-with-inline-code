@@ -44,7 +44,7 @@ variable "layers" {
   type    = list(string)
   default = []
 
-  description = "List of up to five lambda layer ARNs."
+  description = "List of up to five Lambda layer ARNs."
 }
 
 variable "memory_size" {
