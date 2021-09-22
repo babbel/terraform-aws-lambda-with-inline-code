@@ -40,6 +40,13 @@ variable "handler" {
   description = "The name of the method within your code that Lambda calls to execute your function."
 }
 
+variable "layers" {
+  type    = list(string)
+  default = []
+
+  description = "List of up to five lambda layer ARNs."
+}
+
 variable "memory_size" {
   type = number
 

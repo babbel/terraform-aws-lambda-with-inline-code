@@ -8,6 +8,8 @@ resource "aws_lambda_function" "this" {
   timeout                        = var.timeout
   reserved_concurrent_executions = var.reserved_concurrent_executions
 
+  layers = var.layers
+
   role = aws_iam_role.this.arn
 
   dynamic "environment" {
