@@ -65,6 +65,19 @@ variable "runtime" {
   description = "The identifier of the Lambda function [runtime](https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html)."
 }
 
+variable "secret_environment_variables" {
+  type    = map(string)
+  default = {}
+
+  description = <<EOS
+Map of environment variables' names to ARNs of AWS Secret Manager secrets. If combined with a matching wrapper script layer the lambda's initialisation ARNs will be substituted by the secret values they are referencing and passed as environment variables.
+
+Each ARN will be passed as environment variable to the lambda function with the key's name extended by suffix _SECRET_ARN. When initializing the lambda run time environment the wrapper script will look up the secret value and create a new environment variable with the original name (i.e. without suffix) and set the secret's value as value.
+
+Permission will be added allowing the lambda to read the secret values.
+EOS
+}
+
 variable "source_dir" {
   type    = string
   default = null
