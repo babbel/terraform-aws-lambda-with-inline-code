@@ -74,7 +74,7 @@ Map of environment variables' names to ARNs of AWS Secret Manager secrets. If co
 
 Each ARN will be passed as environment variable to the lambda function with the key's name extended by suffix _SECRET_ARN. When initializing the Lambda run time environment, the Lambda function or a [wrapper script](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-modify.html#runtime-wrapper) can look up the secret value.
 
-Permission will be added allowing the lambda to read the secret values.
+Permission will be added allowing the Lambda function to read the secret values.
 EOS
 }
 
