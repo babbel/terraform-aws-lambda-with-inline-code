@@ -109,8 +109,8 @@ resource "aws_iam_role_policy" "secretsmanager-get-secret-value" {
 
 # Whenever a change is made to the secrets, the role policy must be updated
 # first, then we need to wait for a few seconds and only then update the lambda function itself.
-# Waiting is necessary because otherwise the during initialization of the lambda function the
-# secrets-fetcher wrapper will not yet have the permissions for fetching the secret values.
+# Waiting is necessary because otherwise the during initialization of the lambda function
+# it will not yet have the permissions for fetching the secret values.
 resource "null_resource" "watch_iam_role_policy_secretsmanager_get_secret_value" {
   count = length(var.secret_environment_variables) > 0 ? 1 : 0
 
