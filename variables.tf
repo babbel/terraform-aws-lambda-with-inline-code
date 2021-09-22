@@ -70,7 +70,7 @@ variable "secret_environment_variables" {
   default = {}
 
   description = <<EOS
-Map of environment variables' names to ARNs of AWS Secret Manager secrets. If combined with a matching wrapper script layer the lambda's initialisation ARNs will be substituted by the secret values they are referencing and passed as environment variables.
+Map of environment variable names to ARNs of AWS Secret Manager secrets.
 
 Each ARN will be passed as environment variable to the lambda function with the key's name extended by suffix _SECRET_ARN. When initializing the Lambda run time environment, the Lambda function or a [wrapper script](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-modify.html#runtime-wrapper) can look up the secret value.
 
