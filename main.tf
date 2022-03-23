@@ -13,7 +13,9 @@ resource "aws_lambda_function" "this" {
   role = aws_iam_role.this.arn
 
   dynamic "environment" {
-    for_each = local.environment_variables != null ? [{ variables = local.environment_variables }] : []
+    // local.environments is built using a merge, and merges always result in a map
+    // so we can safely assume we're dealing with a map here.
+    for_each = length(local.environment_variables) > 0 ? [{ variables = local.environment_variables }] : []
 
     content {
       variables = environment.value.variables
