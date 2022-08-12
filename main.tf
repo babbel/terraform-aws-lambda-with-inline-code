@@ -41,6 +41,8 @@ data "archive_file" "this" {
   output_path = ".terraform/tmp/lambda/${var.function_name}.zip"
 }
 
+# IAM role
+
 resource "aws_iam_role" "this" {
   name = "lambda-${var.function_name}"
 
@@ -60,11 +62,7 @@ data "aws_iam_policy_document" "lambda-assume-role" {
   }
 }
 
-resource "aws_iam_role_policy" "cloudwatch-log-group" {
-  role   = aws_iam_role.this.name
-  name   = "cloudwatch-log-group"
-  policy = data.aws_iam_policy_document.cloudwatch-log-group.json
-}
+# CloudWatch Logs group
 
 resource "aws_cloudwatch_log_group" "this" {
   name = "/aws/lambda/${var.function_name}"
@@ -72,6 +70,12 @@ resource "aws_cloudwatch_log_group" "this" {
   retention_in_days = var.cloudwatch_log_group_retention_in_days
 
   tags = var.tags
+}
+
+resource "aws_iam_role_policy" "cloudwatch-log-group" {
+  role   = aws_iam_role.this.name
+  name   = "cloudwatch-log-group"
+  policy = data.aws_iam_policy_document.cloudwatch-log-group.json
 }
 
 data "aws_iam_policy_document" "cloudwatch-log-group" {
@@ -85,7 +89,6 @@ data "aws_iam_policy_document" "cloudwatch-log-group" {
     resources = ["${aws_cloudwatch_log_group.this.arn}:*"]
   }
 }
-
 
 # Secret environment variables
 
