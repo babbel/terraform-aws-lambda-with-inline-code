@@ -97,3 +97,29 @@ variable "timeout" {
 
   description = "The amount of time (in seconds) per execution before stopping it."
 }
+
+variable "vpc_config" {
+  type = object({
+    vpc = object({
+      id = string
+    })
+
+    subnets = list(
+      object({
+        arn = string
+        id  = string
+      })
+    )
+  })
+
+  default = null
+
+  description = <<EOS
+VPC configuration of the Lambda function:
+
+* `vpc`: The VPC in which the Lambda function will be running and where all VPC-related resources (e.g. the security group) will be located.
+* `subnets`: List of subnets in which the Lambda function will be running. The subnets must be in the VPC specified by `vpc`.
+
+If `vpc_config` is `null` the Lambda function will not be placed into a VPC.
+EOS
+}
