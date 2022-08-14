@@ -81,6 +81,12 @@ resource "aws_cloudwatch_log_group" "this" {
   tags = var.tags
 }
 
+resource "aws_iam_role_policy" "cloudwatch-log-group" {
+  role   = aws_iam_role.this.name
+  name   = "cloudwatch-log-group"
+  policy = data.aws_iam_policy_document.cloudwatch-log-group.json
+}
+
 data "aws_iam_policy_document" "cloudwatch-log-group" {
   statement {
     actions   = ["logs:DescribeLogStreams"]
@@ -91,12 +97,6 @@ data "aws_iam_policy_document" "cloudwatch-log-group" {
     actions   = ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"]
     resources = ["${aws_cloudwatch_log_group.this.arn}:*"]
   }
-}
-
-resource "aws_iam_role_policy" "cloudwatch-log-group" {
-  role   = aws_iam_role.this.name
-  name   = "cloudwatch-log-group"
-  policy = data.aws_iam_policy_document.cloudwatch-log-group.json
 }
 
 # VPC config
