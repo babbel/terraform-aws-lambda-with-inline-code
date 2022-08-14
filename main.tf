@@ -12,6 +12,15 @@ resource "aws_lambda_function" "this" {
 
   role = aws_iam_role.this.arn
 
+  dynamic "vpc_config" {
+    for_each = local.vpc_configs
+
+    content {
+      subnet_ids         = vpc_config.value.subnets[*].id
+      security_group_ids = values(aws_security_group.this)[*].id
+    }
+  }
+
   dynamic "environment" {
     // local.environments is built using a merge, and merges always result in a map
     // so we can safely assume we're dealing with a map here.
