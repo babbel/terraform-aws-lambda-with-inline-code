@@ -90,6 +90,46 @@ data "aws_iam_policy_document" "cloudwatch-log-group" {
   }
 }
 
+# VPC config
+
+locals {
+  # convert `var.vpc_config` into a `for_each`-compatible local
+  vpc_config_key = "lambda"
+  vpc_configs    = var.vpc_config != null ? { (local.vpc_config_key) = var.vpc_config } : {}
+}
+
+resource "aws_security_group" "this" {
+  for_each = local.vpc_configs
+
+  name        = "lambda-${var.function_name}"
+  description = "Lambda: ${var.function_name}"
+  vpc_id      = each.value.vpc.id
+
+  tags = merge({
+    Name = "Lambda: ${var.function_name}"
+  }, var.tags)
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_security_group_rule" "egress" {
+  for_each = aws_security_group.this
+
+  security_group_id = each.value.id
+
+  type        = "egress"
+  cidr_blocks = ["0.0.0.0/0"]
+  protocol    = "-1"
+  from_port   = 0
+  to_port     = 0
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
 # Secret environment variables
 
 locals {

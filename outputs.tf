@@ -15,3 +15,9 @@ output "iam_role" {
 
   description = "The IAM role the Lambda function will assume."
 }
+
+output "security_group" {
+  value = lookup(aws_security_group.this, local.vpc_config_key, null)
+
+  description = "The VPC security group the Lambda function will use if `var.vpc_config` is specified; `null` otherwise."
+}
