@@ -130,6 +130,65 @@ resource "aws_security_group_rule" "egress" {
   }
 }
 
+data "aws_iam_policy_document" "vpc" {
+  for_each = local.vpc_configs
+
+  statement {
+    actions = ["ec2:CreateNetworkInterface"]
+
+    resources = flatten([
+      "arn:${data.aws_partition.current[local.vpc_config_key].partition}:ec2:${data.aws_region.current[local.vpc_config_key].name}:${data.aws_caller_identity.current[local.vpc_config_key].account_id}:network-interface/*",
+      each.value.subnets[*].arn,
+      values(aws_security_group.this)[*].arn
+    ])
+  }
+
+  statement {
+    actions   = ["ec2:DescribeNetworkInterfaces"]
+    resources = ["*"]
+
+    condition {
+      variable = "ec2:Region"
+      test     = "StringEquals"
+      values   = [data.aws_region.current[local.vpc_config_key].name]
+    }
+  }
+
+  statement {
+    actions = ["ec2:DeleteNetworkInterface"]
+
+    resources = [
+      "arn:${data.aws_partition.current[local.vpc_config_key].partition}:ec2:${data.aws_region.current[local.vpc_config_key].name}:${data.aws_caller_identity.current[local.vpc_config_key].account_id}:network-interface/*",
+    ]
+
+    condition {
+      variable = "ec2:Subnet"
+      test     = "StringEquals"
+      values   = each.value.subnets[*].arn
+    }
+  }
+}
+
+resource "aws_iam_role_policy" "vpc" {
+  for_each = data.aws_iam_policy_document.vpc
+
+  role   = aws_iam_role.this.name
+  name   = "vpc"
+  policy = each.value.json
+}
+
+data "aws_partition" "current" {
+  for_each = local.vpc_configs
+}
+
+data "aws_region" "current" {
+  for_each = local.vpc_configs
+}
+
+data "aws_caller_identity" "current" {
+  for_each = local.vpc_configs
+}
+
 # Secret environment variables
 
 locals {
