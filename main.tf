@@ -73,18 +73,18 @@ data "aws_iam_policy_document" "lambda-assume-role" {
 
 # CloudWatch Logs group
 
+resource "aws_iam_role_policy" "cloudwatch-log-group" {
+  role   = aws_iam_role.this.name
+  name   = "cloudwatch-log-group"
+  policy = data.aws_iam_policy_document.cloudwatch-log-group.json
+}
+
 resource "aws_cloudwatch_log_group" "this" {
   name = "/aws/lambda/${var.function_name}"
 
   retention_in_days = var.cloudwatch_log_group_retention_in_days
 
   tags = var.tags
-}
-
-resource "aws_iam_role_policy" "cloudwatch-log-group" {
-  role   = aws_iam_role.this.name
-  name   = "cloudwatch-log-group"
-  policy = data.aws_iam_policy_document.cloudwatch-log-group.json
 }
 
 data "aws_iam_policy_document" "cloudwatch-log-group" {
