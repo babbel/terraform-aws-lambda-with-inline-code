@@ -171,9 +171,9 @@ data "aws_iam_policy_document" "vpc" {
     ]
 
     condition {
-      variable = "ec2:Subnet"
+      variable = "ec2:Region"
       test     = "StringEquals"
-      values   = each.value.subnets[*].arn
+      values   = [data.aws_region.current[local.vpc_config_key].name]
     }
   }
 }
