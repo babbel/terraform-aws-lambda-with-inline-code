@@ -169,12 +169,6 @@ data "aws_iam_policy_document" "vpc" {
     resources = [
       "arn:${data.aws_partition.current[local.vpc_config_key].partition}:ec2:${data.aws_region.current[local.vpc_config_key].name}:${data.aws_caller_identity.current[local.vpc_config_key].account_id}:network-interface/*",
     ]
-
-    condition {
-      variable = "ec2:Region"
-      test     = "StringEquals"
-      values   = [data.aws_region.current[local.vpc_config_key].name]
-    }
   }
 }
 
