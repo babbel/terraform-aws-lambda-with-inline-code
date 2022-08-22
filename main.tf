@@ -164,11 +164,11 @@ data "aws_iam_policy_document" "vpc" {
   }
 
   statement {
-    actions = ["ec2:DeleteNetworkInterface"]
-
-    resources = [
-      "arn:${data.aws_partition.current[local.vpc_config_key].partition}:ec2:${data.aws_region.current[local.vpc_config_key].name}:${data.aws_caller_identity.current[local.vpc_config_key].account_id}:network-interface/*",
-    ]
+    # It is not possible to restrict this permissions because the Lambda runtime
+    # is making a DryRun call to this action without any request parameters
+    # before actually creating the Lambda function.
+    actions   = ["ec2:DeleteNetworkInterface"]
+    resources = ["*"]
   }
 }
 
