@@ -169,6 +169,12 @@ data "aws_iam_policy_document" "vpc" {
     # before actually creating the Lambda function.
     actions   = ["ec2:DeleteNetworkInterface"]
     resources = ["*"]
+
+    condition {
+      variable = "ec2:Region"
+      test     = "StringEquals"
+      values   = [data.aws_region.current[local.vpc_config_key].name]
+    }
   }
 }
 
