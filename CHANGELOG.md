@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.3.0
+
+- [Add VPC support](https://github.com/babbel/terraform-aws-lambda-with-inline-code/pull/19)
+
 ## v1.2.1
 
 - [Empty environment is handled correctly](https://github.com/babbel/terraform-aws-lambda-with-inline-code/pull/15)
