@@ -21,6 +21,8 @@ resource "aws_lambda_function" "this" {
     }
   }
 
+  replace_security_groups_on_destroy = var.vpc_config != null
+
   dynamic "environment" {
     // local.environments is built using a merge, and merges always result in a map
     // so we can safely assume we're dealing with a map here.
