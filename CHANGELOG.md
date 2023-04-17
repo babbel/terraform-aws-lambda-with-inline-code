@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.4.0
+
+- [Replace security groups on destroy for Lambdas in VPCs](https://github.com/babbel/terraform-aws-lambda-with-inline-code/pull/23)
+
 ## v1.3.0
 
 - [Add VPC support](https://github.com/babbel/terraform-aws-lambda-with-inline-code/pull/19)
