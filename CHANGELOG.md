@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.5.0
+
+- [Relax version constraints for modules](https://github.com/babbel/terraform-aws-lambda-with-inline-code/pull/24)
+
 ## v1.4.0
 
 - [Replace security groups on destroy for Lambdas in VPCs](https://github.com/babbel/terraform-aws-lambda-with-inline-code/pull/23)
