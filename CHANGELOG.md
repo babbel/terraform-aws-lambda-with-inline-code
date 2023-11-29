@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.6.0
+
+- [Drop deprecated replace_security_groups_on_destroy attribute](https://github.com/babbel/terraform-aws-lambda-with-inline-code/pull/28)
+
 ## v1.5.0
 
 - [Relax version constraints for modules](https://github.com/babbel/terraform-aws-lambda-with-inline-code/pull/24)
