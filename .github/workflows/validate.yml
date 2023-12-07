@@ -4,7 +4,7 @@ on: pull_request
 
 jobs:
   validate_terraform_versions:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     strategy:
       matrix:
@@ -29,7 +29,7 @@ jobs:
   validate: # this is a workaround, see https://github.community/t/status-check-for-a-matrix-jobs/127354/6
     if: ${{ always() }}
     needs: [validate_terraform_versions]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Check build status of all needed jobs
         if: ${{ needs.validate_terraform_versions.result != 'success' }}
