@@ -1,6 +1,6 @@
 # NOTE: CHANGELOG.md is deprecated
 
-After the release of v1.2.0, please see the [GitHub release notes](https://github.com/babbel/terraform-aws-lambda-with-inline-code/releases)
+After the release of v1.6.0, please see the [GitHub release notes](https://github.com/babbel/terraform-aws-lambda-with-inline-code/releases)
 for the module in order to view the most up-to-date changes.
 
 ## v1.6.0
