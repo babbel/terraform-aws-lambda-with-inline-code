@@ -20,7 +20,7 @@ module "lambda" {
 
   source_dir = "lambda/src"
 
-  tags = {
+  default_tags = {
     app = "example"
     env = "production"
   }
