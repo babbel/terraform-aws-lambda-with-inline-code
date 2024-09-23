@@ -24,7 +24,7 @@ variable "cloudwatch_log_group_tags" {
   default = {}
 
   description = <<EOS
-Map of tags assigned to the CloudWatch log group used by the Lambda function.
+Map of tags assigned to the CloudWatch log group used by the Lambda function created by this module. Tags in this map will override tags in `var.default_tags`.
 EOS
 }
 
@@ -75,7 +75,7 @@ variable "iam_role_tags" {
   default = {}
 
   description = <<EOS
-Map of tags assigned to the IAM role used by the Lambda function.
+Map of tags assigned to the IAM role used by the Lambda function created by this module. Tags in this map will override tags in `var.default_tags`.
 EOS
 }
 
@@ -84,7 +84,7 @@ variable "lambda_function_tags" {
   default = {}
 
   description = <<EOS
-Map of tags assigned to the Lambda function.
+Map of tags assigned to the Lambda function created by this module. Tags in this map will override tags in `var.default_tags`.
 EOS
 }
 
@@ -139,7 +139,7 @@ variable "security_group_tags" {
   default = {}
 
   description = <<EOS
-Map of tags assigned to the security group used by the Lambda function (if placed into a VPC).
+Map of tags assigned to the security group used by the Lambda function (if placed into a VPC)  created by this module. Tags in this map will override tags in `var.default_tags`.
 EOS
 }
 
