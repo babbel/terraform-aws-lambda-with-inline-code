@@ -19,6 +19,15 @@ The number of days to retain the log of the Lambda function.
 EOS
 }
 
+variable "cloudwatch_log_group_tags" {
+  type    = map(string)
+  default = {}
+
+  description = <<EOS
+Map of tags assigned to the CloudWatch log group used by the Lambda function.
+EOS
+}
+
 variable "default_tags" {
   type    = map(string)
   default = {}
@@ -58,6 +67,24 @@ variable "handler" {
 
   description = <<EOS
 The name of the method within your code that Lambda calls to execute your function.
+EOS
+}
+
+variable "iam_role_tags" {
+  type    = map(string)
+  default = {}
+
+  description = <<EOS
+Map of tags assigned to the IAM role used by the Lambda function.
+EOS
+}
+
+variable "lambda_function_tags" {
+  type    = map(string)
+  default = {}
+
+  description = <<EOS
+Map of tags assigned to the Lambda function.
 EOS
 }
 
@@ -104,6 +131,15 @@ Map of environment variable names to ARNs of AWS Secret Manager secrets.
 Each ARN will be passed as environment variable to the lambda function with the key's name extended by suffix _SECRET_ARN. When initializing the Lambda run time environment, the Lambda function or a [wrapper script](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-modify.html#runtime-wrapper) can look up the secret value.
 
 Permission will be added allowing the Lambda function to read the secret values.
+EOS
+}
+
+variable "security_group_tags" {
+  type    = map(string)
+  default = {}
+
+  description = <<EOS
+Map of tags assigned to the security group used by the Lambda function (if placed into a VPC).
 EOS
 }
 

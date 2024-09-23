@@ -34,7 +34,7 @@ resource "aws_lambda_function" "this" {
   filename         = try(var.archive_file.output_path, data.archive_file.this[0].output_path)
   source_code_hash = try(var.archive_file.output_base64sha256, data.archive_file.this[0].output_base64sha256)
 
-  tags = var.default_tags
+  tags = merge(var.default_tags, var.lambda_function_tags)
 
   depends_on = [
     aws_cloudwatch_log_group.this,
@@ -57,7 +57,7 @@ resource "aws_iam_role" "this" {
 
   assume_role_policy = data.aws_iam_policy_document.lambda-assume-role.json
 
-  tags = var.default_tags
+  tags = merge(var.default_tags, var.iam_role_tags)
 }
 
 data "aws_iam_policy_document" "lambda-assume-role" {
@@ -84,7 +84,7 @@ resource "aws_cloudwatch_log_group" "this" {
 
   retention_in_days = var.cloudwatch_log_group_retention_in_days
 
-  tags = var.default_tags
+  tags = merge(var.default_tags, var.cloudwatch_log_group_tags)
 }
 
 data "aws_iam_policy_document" "cloudwatch-log-group" {
@@ -116,7 +116,7 @@ resource "aws_security_group" "this" {
 
   tags = merge({
     Name = "Lambda: ${var.function_name}"
-  }, var.default_tags)
+  }, var.default_tags, var.security_group_tags)
 
   lifecycle {
     create_before_destroy = true
