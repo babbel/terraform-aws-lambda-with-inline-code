@@ -19,6 +19,15 @@ The number of days to retain the log of the Lambda function.
 EOS
 }
 
+variable "default_tags" {
+  type    = map(string)
+  default = {}
+
+  description = <<EOS
+Map of tags assigned to all AWS resources created by this module.
+EOS
+}
+
 variable "description" {
   type = string
 
@@ -104,15 +113,6 @@ variable "source_dir" {
 
   description = <<EOS
 Path of the directory which shall be packed as code of the Lambda function. Conflicts with `archive_file`.
-EOS
-}
-
-variable "tags" {
-  type    = map(string)
-  default = {}
-
-  description = <<EOS
-Map of tags assigned to all AWS resources created by this module.
 EOS
 }
 

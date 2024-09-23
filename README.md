@@ -23,10 +23,5 @@ module "lambda" {
   }
 
   source_dir = "lambda/src"
-
-  tags = {
-    app = "example"
-    env = "production"
-  }
 }
 ```
