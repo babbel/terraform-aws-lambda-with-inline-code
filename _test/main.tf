@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 module "lambda" {
-  source  = "./.."
+  source = "./.."
 
   function_name = "example"
   description   = "This is an example"

@@ -5,64 +5,84 @@ variable "archive_file" {
   })
   default = null
 
-  description = "An instance of the `archive_file` data source containing the code of the Lambda function. Conflicts with `source_dir`."
+  description = <<EOS
+An instance of the `archive_file` data source containing the code of the Lambda function. Conflicts with `source_dir`.
+EOS
 }
 
 variable "cloudwatch_log_group_retention_in_days" {
   type    = number
   default = 3
 
-  description = "The number of days to retain the log of the Lambda function."
+  description = <<EOS
+The number of days to retain the log of the Lambda function.
+EOS
 }
 
 variable "description" {
   type = string
 
-  description = "Description of the Lambda function."
+  description = <<EOS
+Description of the Lambda function.
+EOS
 }
 
 variable "environment_variables" {
   type    = map(string)
   default = null
 
-  description = "Environment variable key-value pairs."
+  description = <<EOS
+Environment variable key-value pairs.
+EOS
 }
 
 variable "function_name" {
   type = string
 
-  description = "Name of the Lambda function."
+  description = <<EOS
+Name of the Lambda function.
+EOS
 }
 
 variable "handler" {
   type = string
 
-  description = "The name of the method within your code that Lambda calls to execute your function."
+  description = <<EOS
+The name of the method within your code that Lambda calls to execute your function.
+EOS
 }
 
 variable "layers" {
   type    = list(string)
   default = []
 
-  description = "List of up to five Lambda layer ARNs."
+  description = <<EOS
+List of up to five Lambda layer ARNs.
+EOS
 }
 
 variable "memory_size" {
   type = number
 
-  description = "The amount of memory (in MB) available to the function at runtime. Increasing the Lambda function memory also increases its CPU allocation."
+  description = <<EOS
+The amount of memory (in MB) available to the function at runtime. Increasing the Lambda function memory also increases its CPU allocation.
+EOS
 }
 
 variable "reserved_concurrent_executions" {
   type = number
 
-  description = "The number of simultaneous executions to reserve for the Lambda function."
+  description = <<EOS
+The number of simultaneous executions to reserve for the Lambda function.
+EOS
 }
 
 variable "runtime" {
   type = string
 
-  description = "The identifier of the Lambda function [runtime](https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html)."
+  description = <<EOS
+The identifier of the Lambda function [runtime](https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html).
+EOS
 }
 
 variable "secret_environment_variables" {
@@ -82,20 +102,26 @@ variable "source_dir" {
   type    = string
   default = null
 
-  description = "Path of the directory which shall be packed as code of the Lambda function. Conflicts with `archive_file`."
+  description = <<EOS
+Path of the directory which shall be packed as code of the Lambda function. Conflicts with `archive_file`.
+EOS
 }
 
 variable "tags" {
   type    = map(string)
   default = {}
 
-  description = "Tags which will be assigned to all resources."
+  description = <<EOS
+Map of tags assigned to all AWS resources created by this module.
+EOS
 }
 
 variable "timeout" {
   type = number
 
-  description = "The amount of time (in seconds) per execution before stopping it."
+  description = <<EOS
+The amount of time (in seconds) per execution before stopping it.
+EOS
 }
 
 variable "vpc_config" {
@@ -106,12 +132,10 @@ variable "vpc_config" {
         id  = string
       })
     )
-
     vpc = object({
       id = string
     })
   })
-
   default = null
 
   description = <<EOS
