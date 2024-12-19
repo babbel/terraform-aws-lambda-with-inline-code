@@ -1,0 +1,20 @@
+name: Post comments about TF syntax
+
+on: pull_request
+
+jobs:
+  post-format-comment:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.6
+      - name: Terraform Format
+        run: terraform fmt -recursive
+      - name: Suggest format changes
+        uses: reviewdog/action-suggester@v1
+        with:
+          tool_name: terraform fmt
+          level: error
