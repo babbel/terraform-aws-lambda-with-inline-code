@@ -38,7 +38,7 @@ resource "aws_lambda_function" "this" {
 
   depends_on = [
     aws_cloudwatch_log_group.this,
-    null_resource.watch_iam_role_policy_secretsmanager_get_secret_value,
+    terraform_data.watch_iam_role_policy_secretsmanager_get_secret_value,
   ]
 }
 
@@ -224,13 +224,12 @@ resource "aws_iam_role_policy" "secretsmanager-get-secret-value" {
 # first, then we need to wait for a few seconds and only then update the lambda function itself.
 # Waiting is necessary because otherwise the during initialization of the lambda function
 # it will not yet have the permissions for fetching the secret values.
-resource "null_resource" "watch_iam_role_policy_secretsmanager_get_secret_value" {
+resource "terraform_data" "watch_iam_role_policy_secretsmanager_get_secret_value" {
   count = length(var.secret_environment_variables) > 0 ? 1 : 0
 
-  # null_resource is replaced every time the policy changes
-  triggers = {
-    secretsmanager_get_secret_value_policy = aws_iam_role_policy.secretsmanager-get-secret-value[count.index].policy
-  }
+  triggers_replace = [
+    aws_iam_role_policy.secretsmanager-get-secret-value[count.index].policy
+  ]
 
   provisioner "local-exec" {
     command = "sleep 15"
