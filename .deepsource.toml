@@ -5,6 +5,3 @@ name = "secrets"
 
 [[analyzers]]
 name = "terraform"
-
-[[transformers]]
-name = "prettier"
