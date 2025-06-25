@@ -1,4 +1,6 @@
 resource "aws_lambda_function" "this" {
+  region = var.region
+
   function_name = var.function_name
   description   = var.description
 
@@ -80,6 +82,8 @@ resource "aws_iam_role_policy" "cloudwatch-log-group" {
 }
 
 resource "aws_cloudwatch_log_group" "this" {
+  region = var.region
+
   name = "/aws/lambda/${var.function_name}"
 
   retention_in_days = var.cloudwatch_log_group_retention_in_days
@@ -110,6 +114,8 @@ locals {
 resource "aws_security_group" "this" {
   for_each = local.vpc_configs
 
+  region = var.region
+
   name        = "lambda-${var.function_name}"
   description = "Lambda: ${var.function_name}"
   vpc_id      = each.value.vpc.id
@@ -125,6 +131,8 @@ resource "aws_security_group" "this" {
 
 resource "aws_security_group_rule" "egress" {
   for_each = aws_security_group.this
+
+  region = var.region
 
   security_group_id = each.value.id
 
@@ -192,6 +200,8 @@ data "aws_partition" "current" {
 
 data "aws_region" "current" {
   for_each = local.vpc_configs
+
+  region = var.region
 }
 
 data "aws_caller_identity" "current" {

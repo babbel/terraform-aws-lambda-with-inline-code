@@ -183,3 +183,9 @@ VPC configuration of the Lambda function:
 If `vpc_config` is `null` the Lambda function will not be placed into a VPC.
 EOS
 }
+
+variable "region" {
+  description = "Region where the resource(s) will be managed. Defaults to the region set in the provider configuration"
+  type        = string
+  default     = null
+}
