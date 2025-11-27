@@ -3,6 +3,10 @@ version: 2
 updates:
 - package-ecosystem: github-actions
   directory: /
+  labels:
+    - "dependencies"
+    - "github_actions"
+    - "team:infra"
   schedule:
     interval: weekly
     day: saturday
