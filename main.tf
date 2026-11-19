@@ -59,16 +59,32 @@ resource "aws_iam_role" "this" {
 
   assume_role_policy = data.aws_iam_policy_document.lambda-assume-role.json
 
-  permissions_boundary = var.iam_role_permissions_boundary
+  permissions_boundary = local.iam_role_permissions_boundary
 
   tags = merge(var.default_tags, var.iam_role_tags)
 
   # The boundary is set when the role is created. A role created before
-  # `var.iam_role_permissions_boundary` was set keeps its boundary, or none, until it is
+  # `var.iam_role_permissions_boundary_name` was set keeps its boundary, or none, until it is
   # replaced, so setting the variable never changes what a running function may do.
   lifecycle {
     ignore_changes = [permissions_boundary]
   }
+}
+
+data "aws_caller_identity" "boundary" {
+  count = var.iam_role_permissions_boundary_name != null ? 1 : 0
+}
+
+data "aws_partition" "boundary" {
+  count = var.iam_role_permissions_boundary_name != null ? 1 : 0
+}
+
+locals {
+  iam_role_permissions_boundary = (
+    var.iam_role_permissions_boundary_name != null
+    ? "arn:${data.aws_partition.boundary[0].partition}:iam::${data.aws_caller_identity.boundary[0].account_id}:policy/${var.iam_role_permissions_boundary_name}"
+    : null
+  )
 }
 
 data "aws_iam_policy_document" "lambda-assume-role" {

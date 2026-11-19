@@ -20,7 +20,7 @@ module "lambda" {
 
   source_dir = "lambda/src"
 
-  iam_role_permissions_boundary = "arn:aws:iam::123456789012:policy/example-boundary"
+  iam_role_permissions_boundary_name = "example-boundary"
 
   default_tags = {
     app = "example"
