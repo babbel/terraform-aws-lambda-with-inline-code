@@ -70,6 +70,15 @@ The name of the method within your code that Lambda calls to execute your functi
 EOS
 }
 
+variable "iam_role_permissions_boundary" {
+  type    = string
+  default = null
+
+  description = <<EOS
+ARN of the IAM policy set as permissions boundary of the IAM role used by the Lambda function created by this module. It is only set when the role is created: changing it later doesn't change an existing role.
+EOS
+}
+
 variable "iam_role_tags" {
   type    = map(string)
   default = {}
