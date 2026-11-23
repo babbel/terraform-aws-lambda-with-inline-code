@@ -128,9 +128,7 @@ data "aws_iam_policy_document" "cloudwatch-log-group" {
   }
 
   statement {
-    # CreateLogGroup stays here until the 2027-04-26 CloudWatch Logs ARN change
-    # has rolled out in every region; until then it is authorized via the `:*` ARN.
-    actions   = ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"]
+    actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
     resources = ["${aws_cloudwatch_log_group.this.arn}:*"]
   }
 }
